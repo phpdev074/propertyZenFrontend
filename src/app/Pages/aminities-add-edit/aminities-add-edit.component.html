@@ -1,0 +1,62 @@
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' ,fullScreenBackdrop:true}"></ngx-loading>
+<div class="wrapper">
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-4">
+            <div class="breadcrumb-title pe-3">Amenities</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);" routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page" (click)="service.back()">Amenities</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+
+        <div class="row">
+            <div class="col-xl-7 mx-auto">
+                <div class="card border-top border-0 border-4 border-brand">
+                    <div class="card-body p-5">
+                        <div class="card-title d-flex align-items-center">
+                            <div><i class="bx bxs-user me-1 font-22 brand-color"></i>
+                            </div>
+                            <h5 class="mb-0 brand-color">Amenities</h5>
+                        </div>
+                        <hr>
+                        <form [formGroup]="aminityData">
+                            <div class="col-12">
+                                <div class="form-group pb-4">
+                                    <label class="form-label m-0 pb-1" for="Username"> Name </label>
+                                    <input type="text" class="form-control text-lowercase" id="Username" placeholder="Name" aria-describedby="errorEmail" formControlName="name" [(ngModel)]="currentdetail.name" [ngClass]="{ 'is-invalid': submitted && f.name.errors }">
+                                    <small id="errorEmail" class="errormessage orange-color d-inline-block pt-2" *ngIf="submitted && f.name.errors"> 
+                                        <div *ngIf="f['name'].errors['required']"> Name is required</div>                                        
+                                    </small>                                            
+                                </div>
+                            </div>                       
+                           
+                            <div class="col-12 pt-4 d-flex">
+                                <button type="click" class="btn custom-btn brand-btn px-5 me-5" (click)="service.back()">Back
+                                </button>
+                                <button type="submit" class="btn custom-btn brandsecundary-btn px-5" (click)="Onsubmit()">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end row-->
+
+    </div>
+</div>
+
+<app-footer></app-footer>
+</div>
+

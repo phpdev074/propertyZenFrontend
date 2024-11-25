@@ -1,0 +1,142 @@
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' ,fullScreenBackdrop:true}"></ngx-loading>
+<div class="wrapper">
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-4">
+            <div class="breadcrumb-title pe-3">Bid Detail</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);" routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page" (click)="service.back()">Bids</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+
+        <div class="row">
+            <div class="col-xl-9 mx-auto">
+                <div class="card border-top border-0 border-4 border-brand">
+                    <div class="card-body p-5">
+                        <div class="card-title d-flex align-items-center">
+                            <div><i class="bx bxs-user me-1 font-22 brand-color"></i>
+                            </div>
+                            <h5 class="mb-0 brand-color">Detail</h5>
+                        </div>
+                        <hr>
+                        <form class="row">
+                            <div class="col-6">
+                                <div class="form-group pb-4">
+                                    <label class="form-label m-0" for="Username"> Ticket No. </label>
+                                    <input type="text" class="form-control text-lowercase" id="Username" placeholder="Name" aria-describedby="errorEmail" [(ngModel)]="currentdetail.ticketData.ticketNumber" [ngModelOptions]="{standalone: true}" readonly disabled>
+                                </div>
+                            </div> 
+                            <div class="col-6">
+                                <div class="form-group pb-4">
+                                    <label class="form-label m-0" for="Username"> Issue </label>
+                                    <input type="text" class="form-control text-lowercase" id="Username" placeholder="Name" aria-describedby="errorEmail" [(ngModel)]="currentdetail.serviceData.name" [ngModelOptions]="{standalone: true}" readonly disabled>
+                                </div>
+                            </div> 
+                            <div class="col-6">
+                                <div class="form-group pb-4">
+                                    <label class="form-label m-0" for="Username"> Property Name </label>
+                                    <input type="text" class="form-control text-lowercase" id="Username" placeholder="Name" aria-describedby="errorEmail" [(ngModel)]="currentdetail.propertyData.name" [ngModelOptions]="{standalone: true}" readonly disabled>
+                                </div>
+                            </div> 
+                            <div class="col-6">
+                                <div class="form-group pb-4">
+                                    <label class="form-label m-0" for="Username"> Created By </label>
+                                    <input type="text" class="form-control text-lowercase" id="Username" placeholder="Name" aria-describedby="errorEmail" [(ngModel)]="currentdetail.bidCreatedBy" [ngModelOptions]="{standalone: true}" readonly disabled>
+                                </div>
+                            </div>  
+                           
+                            <div class="col-6">
+                                <div class="form-group pb-4">
+                                    <label class="form-label m-0" for="Username"> Apartment Name </label>
+                                    <input type="text" class="form-control text-lowercase" id="Username" placeholder="Name" aria-describedby="errorEmail" [(ngModel)]="currentdetail.apartmentData.name" [ngModelOptions]="{standalone: true}" readonly disabled>
+                                </div>
+                            </div>  
+                            <div class="col-6">
+                                <div class="form-group pb-4">
+                                    <label class="form-label m-0" for="Username"> Unit Number </label>
+                                    <input type="text" class="form-control text-lowercase" id="Username" placeholder="Name" aria-describedby="errorEmail" [(ngModel)]="currentdetail.unitData.unitNumber" [ngModelOptions]="{standalone: true}" readonly disabled>
+                                </div>
+                            </div>
+                            
+                            <div class="col-6">
+                                <div class="form-group pb-4">
+                                    <label class="form-label m-0" for="Username"> Posted Date </label>
+                                    <input type="text" class="form-control text-lowercase" id="Username" placeholder="Name" aria-describedby="errorEmail" [(ngModel)]="currentdetail.createdAt" [ngModelOptions]="{standalone: true}" readonly disabled>
+                                </div>
+                            </div> 
+                            <div class="col-6">
+                                <div class="form-group pb-4">
+                                    <label class="form-label m-0" for="Username"> {{currentdetail.titles}} </label>
+                                    <input type="text" class="form-control text-lowercase" id="Username" placeholder="Name" aria-describedby="errorEmail" [(ngModel)]="currentdetail.Dates" [ngModelOptions]="{standalone: true}" readonly disabled>
+                                </div>
+                            </div>
+                          
+                            
+                            <div class="col-12">
+                                <h4>Bidding</h4>
+                                <div class="card">
+                                    <div class="card-body table-responsive">
+                                        <table class="table mb-0 table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">No.</th>
+                                                    <th scope="col">Vendor Name</th>
+                                                    <th scope="col">Repair Part</th>                                       
+                                                    <th scope="col">Hours</th>
+                                                    <th scope="col">Labour</th>
+                                                    <th scope="col">Material Cost</th>
+                                                    <th scope="col">Price Per Hour</th>
+                                                    <th scope="col">Estimate Price</th>
+                                                    <th scope="col">Repair Date</th>
+                                                    <th scope="col">Status</th> 
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let item of currentdetail.bidRequest ; let i = index ">
+                                                    <td scope="row">{{ i + 1 }}</td>
+                                                    <td>{{item.bidRequestCreatedBy}}</td>
+                                                    <td>{{item.repairParts}}</td>                                                        
+                                                    <td>{{item.no_of_hours}}</td>
+                                                    <td>{{item.no_of_labour}}</td>
+                                                    <td>{{item.materialCost}}</td>
+                                                    <td>{{item.pricePerHour}}</td>
+                                                    <td>{{item.estimatePrice}} </td>
+                                                    <td>{{service.dateCon(item.repairDate)}}</td>
+                                                    <td ><span class="badge bg-info" *ngIf="item.status=='Pending'">{{item.status}}</span>
+                                                    <span class="badge bg-success" *ngIf="item.status!='Pending'">{{item.status}}</span></td>
+
+                                                    
+                                                </tr>                               
+                                            </tbody>
+                                        </table>
+                                      
+                                    </div>
+                                </div>
+                            </div>                         
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end row-->
+
+    </div>
+</div>
+
+<app-footer></app-footer>
+</div>
+
+
+

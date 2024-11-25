@@ -1,0 +1,22 @@
+image: node:18
+
+pipelines:
+  default:
+        - step:
+            name: Build development
+            caches:
+              - node
+            script:
+              - npm install --legacy-peer-deps
+              - npm run build --prod
+            artifacts:
+              - dist/**
+        - step:
+            name: Deploy on dev server
+            script:
+              - echo "$(ls -la)"
+              - echo "$(ls -la dist)"
+              - mkdir -p ~/.ssh  # Create the SSH directory if it doesn't exist
+              - ssh-keyscan -H ${EC2_HOST} >> ~/.ssh/known_hosts 
+              - ssh ${EC2_USERNAME}@${EC2_HOST} rm -rf /var/www/propertyzen/admin/*
+              - scp -r dist/property-zen/* ${EC2_USERNAME}@${EC2_HOST}:/var/www/propertyzen/admin/

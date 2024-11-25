@@ -1,0 +1,76 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' ,fullScreenBackdrop:true}"></ngx-loading>
+<div class="wrapper">
+    <section class="section-wrap signinup-wrap">
+        <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-md-0">
+            <div class="container-fluid">
+
+
+                <div class="row align-items-center justify-content-center">
+                    <!-- Start Signinup Wrap -->
+                    <div class="col-12 col-sm-10 col-md-7 col-lg-5 py-5">
+                        <div class="signinup-content-wrap overflow-hidden white-bg brandsecundary-color p-4 p-md-5">
+                            <div class="signinup-header pb-4">
+                                <img src="assets/images/dark_logo.png" />
+                                <h3 class="title brandsecundary-color primaryfont pt-5"> Welcome back </h3>
+                                <p> There are many variations of passages of available, but at majority have suffered alteration in some form… </p>
+                            </div>
+                            <div class="signinup-form">
+                                <form autocomplete="off" [formGroup]="loginData" (ngSubmit)="Onsubmit()">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="form-group pb-4">
+                                                <label class="form-label m-0" for="Username"> Email </label>
+                                                <input type="email" class="form-control text-lowercase" id="Username" placeholder="lisa@gmail.com" aria-describedby="errorEmail" formControlName="email" [(ngModel)]="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                                                <small id="errorEmail" class="errormessage orange-color d-inline-block pt-2" *ngIf="submitted && f.email.errors"> 
+                                                    <div *ngIf="f['email'].errors['required']"> Email is required</div>
+                                                    <div *ngIf="f['email'].errors['email']">Email must be a valid email</div>
+                                                </small> </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-group pb-4">
+                                                <label class="form-label m-0" for="Password">Password</label>
+                                                <div class="input-with-ic">
+                                                    <input type="password" class="form-control" id="password-field" placeholder="***********" minlength="8" [(ngModel)]="password" onkeyup="this.value=this.value.replace(/^\s+/g, '')" formControlName="password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }">
+                                                    <span class="input-icon" (click)="showHide('.toggle-password')"> 
+                                                        <i class="bx bx-low-vision  toggle-password" toggle="#password-field"></i> 
+                                                    </span>
+                                                </div>
+                                                <small id="errorEmail" *ngIf="submitted && f.password.errors" class="errormessage orange-color d-inline-block pt-2">
+                                                    <div *ngIf="f['password'].errors['required']">Password is required</div>
+                                                    <div *ngIf="f['password'].errors['minlength']">Password must be at least 8 characters long and contain at least one special character, one uppercase letter, one lowercase letter, and one number.</div>
+
+                                                </small>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 pb-3 pb-md-0">
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" value="" id="AuthorisedRepresentative" [checked]="rememberCheck" (change)="getCheckType($event)">
+                                                <label class="form-check-label" for="flexSwitchCheckChecked">Remember Me</label>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-md-6">
+                                            <div class="form-link pb-2 text-end col-12">
+                                                <a routerLink="/forgot-password" class="bluelight-color"> Forgot password? </a>
+                                            </div>
+                                        </div> -->
+                                        <div class="form-btn-box pt-4 col-12">
+                                            <button type="submit" class="btn brandsecundary-btn custom-btn w-100">Submit</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- <div class="signinup-footer pt-4 text-center">
+                                <p> Not a member? <a class="font-w-bold" routerLink="/signup"> Sign Up </a> </p>
+                            </div> -->
+                        </div>
+                    </div>
+                    <!-- End Signinup Wrap -->
+                </div>
+                <!--end row-->
+
+
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,64 @@
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' ,fullScreenBackdrop:true}"></ngx-loading>
+<div class="wrapper">
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-4">
+            <div class="breadcrumb-title pe-3">Static Page</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);" routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page" routerLink="/static-page" >Static Page</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+
+        <div class="row">
+            <div class="col-xl-7 mx-auto">
+                <div class="card border-top border-0 border-4 border-brand">
+                    <div class="card-body p-5">
+                        <div class="card-title d-flex align-items-center">
+                            <div><i class="bx bxs-user me-1 font-22 brand-color"></i>
+                            </div>
+                            <h5 class="mb-0 brand-color">Form Layout</h5>
+                        </div>
+                        <hr>
+                        <form [formGroup]="staticData">
+                            <div class="col-md-6 pb-3">
+                                <label for="inputFirstName" class="form-label">Title</label>
+                                <input type="email" class="form-control" id="inputFirstName" [(ngModel)]="CurrentDetail.title" [ngModelOptions]="{standalone: true}" readonly disabled>
+                            </div>
+                            <div class="col-12 pb-3">
+                                <label for="inputEmail" class="form-label">Description</label>
+                                <ckeditor [(ngModel)]="CurrentDetail.description" formControlName="description" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" ngDefaultControl></ckeditor>
+                                    <div *ngIf="submitted && f.description.errors" class="invalid-feedback">
+                                        Description is required
+                                    </div> 
+                            </div>
+                           
+                            <div class="col-12 pt-4 d-flex">
+                                <button type="click" class="btn custom-btn brand-btn px-5 me-5" (click)="service.back()">Back
+                                </button>
+                                <button type="submit" class="btn custom-btn brandsecundary-btn px-5" (click)="Onsubmit()">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end row-->
+
+    </div>
+</div>
+
+<app-footer></app-footer>
+</div>
+

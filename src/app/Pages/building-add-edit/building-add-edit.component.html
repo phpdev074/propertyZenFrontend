@@ -1,0 +1,122 @@
+
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' ,fullScreenBackdrop:true}"></ngx-loading>
+<div class="wrapper">
+<app-sidebar></app-sidebar>
+<app-header></app-header>
+
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-4">
+            <div class="breadcrumb-title pe-3">Building</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item"><a href="javascript:void(0);" routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Building</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <!--end breadcrumb-->
+
+        <div class="row">
+            <div class="col-xl-7 mx-auto">
+                <div class="card border-top border-0 border-4 border-brand">
+                    <div class="card-body p-5">
+                        <div class="card-title d-flex align-items-center">
+                            <div><i class="bx bxs-user me-1 font-22 brand-color"></i>
+                            </div>
+                            <h5 class="mb-0 brand-color">Form Layout</h5>
+                        </div>
+                        <hr>
+                        <form class="row g-3">
+                            <div class="col-md-6">
+                                <label for="inputFirstName" class="form-label">First Name</label>
+                                <input type="email" class="form-control" id="inputFirstName">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputLastName" class="form-label">Last Name</label>
+                                <input type="password" class="form-control" id="inputLastName">
+                            </div>
+                            <div class="col-12">
+                                <label for="inputEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="inputEmail">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="inputPassword">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="inputPassword" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="inputPassword">
+                            </div>
+                            <div class="col-12">
+                                <label for="inputAddress" class="form-label">Address</label>
+                                <textarea class="form-control" id="inputAddress" placeholder="Address..." rows="3"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <label for="inputState" class="form-label">Country</label>
+                                <select id="inputState" class="form-select">
+                                    <option selected>Choose Country...</option>
+                                    <option>Country 1</option>
+                                    <option>Country 2</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Pick a Date</label>
+                                <input type="text" class="form-control datepicker" />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label">Select2 Multiple Control</label>
+                                <select class="multiple-select" data-placeholder="Choose anything" multiple="multiple">
+                                    <option value="United States" selected>United States</option>
+                                    <option value="United Kingdom" selected>United Kingdom</option>
+                                    <option value="Afghanistan" selected>Afghanistan</option>
+                                    <option value="Aland Islands">Aland Islands</option>
+                                    <option value="Albania">Albania</option>
+                                    <option value="Algeria">Algeria</option>
+                                    <option value="American Samoa">American Samoa</option>
+                                    <option value="Andorra">Andorra</option>
+                                    <option value="Angola">Angola</option>
+                                    <option value="Anguilla">Anguilla</option>
+                                    <option value="Antarctica">Antarctica</option>
+                                    <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+                                    <option value="Argentina">Argentina</option>
+                                    <option value="Armenia">Armenia</option>
+                                    <option value="Aruba">Aruba</option>
+                                    <option value="Australia">Australia</option>
+                                    <option value="Austria">Austria</option>
+                                    <option value="Azerbaijan">Azerbaijan</option>
+                                    <option value="Bahamas">Bahamas</option>
+                                    <option value="Bahrain">Bahrain</option>
+                                    <option value="Bangladesh">Bangladesh</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label for="formFile" class="form-label">Choose Image</label><br>
+                                <input class="form-control" type="file" id="formFile">
+                            </div>
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck">
+                                    <label class="form-check-label" for="gridCheck">Check me out</label>
+                                </div>
+                            </div>
+                            <div class="col-12 pt-4">
+                                <button type="submit" class="btn custom-btn brandsecundary-btn px-5">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end row-->
+
+    </div>
+</div>
+
+<app-footer></app-footer>
+</div>
+

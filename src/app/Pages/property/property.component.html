@@ -1,0 +1,125 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' ,fullScreenBackdrop:true}"></ngx-loading>
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <app-header></app-header>
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
+            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-4">
+                <div class="breadcrumb-title pe-3">Property</div>
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Property</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="ms-auto">
+                    <div class="btn-group">
+                        <!-- <button type="button" class="btn brand-btn split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">	<span>Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item" href="javascript:void(0)">Action</a>
+                            <a class="dropdown-item" href="javascript:void(0)">Another action</a>
+                            <a class="dropdown-item" href="javascript:void(0)">Something else here</a>
+                            <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:void(0)">Separated link</a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <!--end breadcrumb-->
+
+            <div class="row">
+                <div class="col-2 pb-3" >
+                    <label for="inputState" class="form-label">Limit</label>
+                    <select id="inputState" class="form-select" [(ngModel)]='pageLimit' (change)="getDetail(1)">
+                    <option *ngFor="let item of service.LimitArray">{{item}}</option>
+                    </select>                   
+                </div>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table mb-0 table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">No.</th>
+                                        <!-- <th scope="col">Image</th> -->
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Apartment</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Create Date</th>
+                                        <th scope="col">Create By</th>
+                                        <th scope="col">Assign To</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of dataListing | paginate: { itemsPerPage: pageLimit, currentPage: p, totalItems: totalCount}; let i = index ">
+                                        <td scope="row">{{(pageLimit * (p - 1)) + i + 1 }}</td>
+                                        <!-- <td>Admin</td> -->
+                                        <td>{{item.name}}</td>
+                                        <td>{{item.apartments.length}}</td>
+                                        <td>{{item.address}}</td>
+                                        <td>
+                                            <span class="badge bg-success" *ngIf="item.status == 'Active'">{{item.status}}</span>
+                                            <span class="badge bg-danger" *ngIf="item.status != 'Active'">{{item.status}}</span>
+                                        </td>
+                                        <td>{{service.dateCon(item.createdAt)}} </td>
+                                        <td>{{item.propertyCreatedBy}}</td>
+                                        <td>{{item.assignedTo}}</td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                               <button type="button" class="btn btn-info text-center me-3" (click)="redirect(item)">
+                                                    <i class="bx bx-show"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-danger text-center d-none">
+                                                    <i class="bx bx-trash"></i>
+                                                </button>
+                                                <button type="button"  class="btn btn-primary text-center " (click)="prpertyId=item._id" data-bs-toggle="modal" data-bs-target="#Sendpasswordresetlink" title="Assign Property"  *ngIf="item.assignedTo=='' || item.assignedTo==null">
+                                                    <i class="bx bx-info-circle" ></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>                               
+                                </tbody>
+                            </table>
+                            <div class="pagination-block pt-5">
+                                <pagination-controls [previousLabel]="previousLabel" [nextLabel]="nextLabel" (pageChange)="getDetail((p = $event))" class="text-center" *ngIf="dataListing.length > 0"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end row-->
+        </div>
+    </div>
+    <app-footer></app-footer>
+    </div>
+
+    <div class="modal fade" id="Sendpasswordresetlink" tabindex="-1" aria-labelledby="SendpasswordresetlinkLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-md-6">
+                                <label for="inputFirstName" class="form-label">Manager Listing</label>
+                                <select  [(ngModel)]="UserId"  class="form-select"  >
+                                    <option *ngFor="let item of userListing" [value]="item._id">{{item.firstName}} {{item.lastName}}</option>
+                                </select>
+                            </div>  
+                            <div class="pt-5 d-flex">
+                                <button type="button" class="btn custom-btn px-5 me-5" (click)="assignProperty()">Submit</button>
+                                <button type="button" class="btn custom-btn brand-btn px-5 " data-bs-toggle="modal" id="clsbtn">Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>                  
+                </div>                
+            </div>
+            
+        </div>
+    </div>

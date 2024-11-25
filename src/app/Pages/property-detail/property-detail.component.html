@@ -1,0 +1,168 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' ,fullScreenBackdrop:true}">
+</ngx-loading>
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <app-header></app-header>
+
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
+            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-4">
+                <div class="breadcrumb-title pe-3">Property Detail</div>
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item"><a href="javascript:void(0);" routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page" (click)="service.back()">Properties</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <!--end breadcrumb-->
+
+            <div class="row" *ngIf="viewshow">
+                <div class="col-xl-7 mx-auto">
+                    <div class="card border-top border-0 border-4 border-brand">
+                        <div class="card-body p-5">
+                            <div class="card-title d-flex align-items-center">
+                                <div><i class="bx bxs-user me-1 font-22 brand-color"></i>
+                                </div>
+                                <h5 class="mb-0 brand-color">Detail</h5>
+                            </div>
+                            <hr>
+                            <form>
+                                <div class="col-12">
+                                    <div class="form-group pb-4">
+                                        <label class="form-label m-0" for="Username"> Name </label>
+                                        <input type="text" class="form-control text-lowercase" id="Username" placeholder="Name" aria-describedby="errorEmail" [(ngModel)]="currentdetail.name" [ngModelOptions]="{standalone: true}" disabled readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <h4>Appartments</h4>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <table class="table mb-0 table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">No.</th>
+                                                        <!-- <th scope="col">Image</th> -->
+                                                        <th scope="col">Name</th>
+                                                        <th scope="col">No. Unit</th>
+                                                        <th scope="col">No. Amenities</th>
+                                                        <th scope="col">Bathroom</th>
+                                                        <th scope="col">Bedroom</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let item of currentdetail.apartments | paginate: { itemsPerPage: pageLimit, currentPage: p, totalItems: totalCount}; let i = index ">
+                                                        <td scope="row">{{(pageLimit * (p - 1)) + i + 1 }}</td>
+                                                        <!-- <td>Admin</td> -->
+                                                        <td>{{item.name}}</td>
+                                                        <td *ngIf="item.units.length ==0">{{item.units.length}}</td>
+                                                        <td (click)="viewdetail(1,item.units)" data-bs-toggle="modal" data-bs-target="#viewLink" title="View Unit" style="cursor: pointer;" *ngIf="item.units.length !=0">{{item.units.length}}</td>
+                                                        <td (click)="viewdetail(2,item.amenities)" data-bs-toggle="modal" data-bs-target="#viewLink1" title="View Aminity" style="cursor: pointer;" *ngIf="item.amenities.length !=0">{{item.amenities.length}}</td>
+                                                        <td *ngIf="item.amenities.length ==0"> {{item.amenities.length}}</td>
+                                                        <td>{{item.bathroom}} </td>
+                                                        <td>{{item.bedroom}}</td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="pagination-block pt-5">
+                                                <pagination-controls [previousLabel]="previousLabel" [nextLabel]="nextLabel" (pageChange)="(p = $event)" class="text-center" *ngIf="currentdetail.apartments.length > 0"></pagination-controls>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end row-->
+
+        </div>
+    </div>
+
+    <app-footer></app-footer>
+</div>
+
+<div class="modal fade" id="viewLink" tabindex="-1" aria-labelledby="viewLinkLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Units</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table mb-0 table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <!-- <th scope="col">Image</th> -->
+                                    <th scope="col">Name</th>
+                                    <!-- <th scope="col">Unit</th> -->
+                                    <th scope="col">Floor Number</th>
+                                    <th scope="col">Unit Number</th>
+                                    <th scope="col">Available</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of unitList;let i = index ">
+                                    <td scope="row">{{ i + 1 }}</td>
+                                    <!-- <td>Admin</td> -->
+                                    <td>{{item.name}}</td>
+                                    <!-- <td>{{item.bathroom}} </td> -->
+                                    <td>{{item.floorNumber}}</td>
+                                    <td>{{item.unitNumber}}</td>
+                                    <td *ngIf="item.isAvailable==false">Occupied</td>
+                                    <td *ngIf="item.isAvailable==true">Available</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="viewLink1" tabindex="-1" aria-labelledby="viewLink1Label" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Amenities</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table mb-0 table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of aminityList ; let i = index ">
+                                    <td scope="row">{{ i + 1 }}</td>
+                                    <td>{{item.name}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>

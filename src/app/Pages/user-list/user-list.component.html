@@ -1,0 +1,129 @@
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' ,fullScreenBackdrop:true}"></ngx-loading>
+<div class="wrapper">
+    <app-sidebar></app-sidebar>
+    <app-header></app-header>
+    <div class="page-wrapper">
+        <div class="page-content">
+            <!--breadcrumb-->
+            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-4">
+                <div class="breadcrumb-title pe-3">User List</div>
+                <div class="ps-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb mb-0 p-0">
+                            <li class="breadcrumb-item"><a href="javascript:void(0)" routerLink="/dashboard"><i class="bx bx-home-alt"></i></a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">User List</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="ms-auto">
+                    <div class="btn-group">
+                        <!-- <button type="button" class="btn brand-btn split-bg-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown">	<span>Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"> <a class="dropdown-item" href="javascript:void(0)">Action</a>
+                            <a class="dropdown-item" href="javascript:void(0)">Another action</a>
+                            <a class="dropdown-item" href="javascript:void(0)">Something else here</a>
+                            <div class="dropdown-divider"></div> <a class="dropdown-item" href="javascript:void(0)">Separated link</a>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+            <!--end breadcrumb-->
+
+            <div class="row">
+                <div class="col-2 pb-3" >
+                    <label for="inputState" class="form-label">Limit</label>
+                    <select id="inputState" class="form-select" [(ngModel)]='pageLimit' (change)="getDetail(1)">
+                    <option *ngFor="let item of service.LimitArray">{{item}}</option>
+                    </select>                   
+                </div>
+                <div class="col-2 pb-3" >
+                    <label for="inputState" class="form-label">Email</label>
+                    <input type="text" id="inputState" class="form-control" [(ngModel)]='EmailSearch' (change)="getDetail(1)">
+                </div>
+                <div class="col-2 pb-3" >
+                    <label for="inputState" class="form-label">Name</label>
+                    <input type="text" id="inputState" class="form-control" [(ngModel)]='NameSearch' (change)="getDetail(1)">
+                </div> 
+                <div class="col-2 pb-3" >
+                    <label for="inputState" class="form-label">Status</label>
+                    <select id="inputState" class="form-select" [(ngModel)]='statusKey' (change)="getDetail(1)">
+                    <option value="Deleted">Deleted</option>
+                    <option value="Approved">Approved </option>
+                    <option value="Block">Block</option>
+                    <option value="Inactive">Pending</option>
+                    </select>                   
+                </div>
+                <div class="col-2 pb-3 pt-4" >
+                    <button type="button" class="btn custom-btn px-5" (click)="reset()">Reset</button>             
+                </div> 
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table mb-0 table-hover">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">No.</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col" *ngIf="currentUrl !='/vendor-listing'">Phone No</th>   
+                                        <th scope="col" *ngIf="currentUrl =='/vendor-listing'">Type</th>                                        
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Create Date</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of dataListing | paginate: { itemsPerPage: pageLimit, currentPage: p, totalItems: totalCount}; let i = index ">
+                                        <td scope="row">{{(pageLimit * (p - 1)) + i + 1 }}</td>
+                                        <td><img [src]="item.image" style="height: 50px;width:50px"></td>
+                                        <td>{{item.firstName}} {{item.lastName}}</td>
+                                        <td>{{item.email}}</td>
+                                        <td *ngIf="currentUrl !='/vendor-listing'">{{item.phoneNumber}}</td>
+                                        <td *ngIf="currentUrl =='/vendor-listing'">{{item.vendorType}}</td>                                        
+                                        <td>
+                                            <span class="badge bg-success" *ngIf="item.status =='Approved' ">{{item.status}}</span>
+                                            <span class="badge bg-warning" *ngIf="item.status =='Block'">{{item.status}}</span>
+                                            <span class="badge bg-info" *ngIf="item.status == 'Inactive'">Pending</span>
+                                            <span class="badge bg-danger" *ngIf="item.status == 'Deleted'">Deleted</span>
+                                        </td>
+                                        <td>{{service.dateCon(item.createdAt)}}  </td>
+                                        <td>
+                                            <div class="btn-group" role="group" aria-label="Basic example"> 
+                                                <button type="button" title="User Detail" class="btn btn-info text-center me-3" (click)="redirect(item,1)">
+                                                    <i class="bx bx-show" ></i>
+                                                </button>                                              
+                                                <button type="button" title="Approve User" class="btn btn-success text-center me-3 " (click)="status='Approved';verifyAccount(item)">
+                                                    <i class="bx bx-check" ></i>
+                                                </button>
+                                                <button type="button" title="Block User" class="btn btn-danger text-center me-3" (click)="status='Block';verifyAccount(item)" *ngIf="item.status !='Block'">
+                                                    <i class="bx bx-x" ></i>
+                                                </button>
+                                                 <button type="button" title="Delete User" class="btn btn-danger text-center " (click)="redirect(item,2)" >
+                                                    <i class="bx bx-trash" ></i>
+                                                </button>                                               
+                                            </div>
+                                        </td>
+                                    </tr>
+                               
+                                </tbody>
+                            </table>
+                            <div class="pagination-block pt-5">
+                                <pagination-controls [previousLabel]="previousLabel" [nextLabel]="nextLabel" (pageChange)="getDetail((p = $event))" class="text-center" *ngIf="dataListing.length > 0"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end row-->
+
+
+
+
+
+        </div>
+    </div>
+    <app-footer></app-footer>
+    </div>
+
